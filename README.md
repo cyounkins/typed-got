@@ -10,6 +10,9 @@ MIT
 
 ```sh
 # Fork this repo
+
+git submodule update
+
 npm install
 
 npm run watch
