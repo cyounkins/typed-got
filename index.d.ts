@@ -2,7 +2,8 @@ import http = require('http');
 import node_stream = require('stream');
 import { Promise } from 'es6-promise';
 
-declare function got (url: string, options?: got.Options): Promise<http.IncomingMessage>;
+declare function got (url: string, options?: got.Options): Promise<got.Response>;
+declare function got (options: got.Options): Promise<got.Response>;
 
 declare namespace got {
     type RetriesFunc = (retries: Number, err: Error) => Number;
@@ -15,14 +16,24 @@ declare namespace got {
         timeout?:  Number;
         retries?:  Number | RetriesFunc;
         followRedirect?: boolean;
+
+        // Undocumented
+        rejectUnauthorized?: boolean;
+        strictSSL?: boolean;
+        ca?: any;
     }
 
-    export function get    (url: string, options?: got.Options): Promise<http.IncomingMessage>;
-    export function post   (url: string, options?: got.Options): Promise<http.IncomingMessage>;
-    export function put    (url: string, options?: got.Options): Promise<http.IncomingMessage>;
-    export function patch  (url: string, options?: got.Options): Promise<http.IncomingMessage>;
-    export function head   (url: string, options?: got.Options): Promise<http.IncomingMessage>;
-    // export function delete (url: string, options?: got.Options): Promise<http.IncomingMessage>;
+    // Could change this to condition on json option?
+    interface Response extends http.IncomingMessage {
+        body: string | Buffer | any;
+    }
+
+    export function get    (url: string, options?: got.Options): Promise<Response>;
+    export function post   (url: string, options?: got.Options): Promise<Response>;
+    export function put    (url: string, options?: got.Options): Promise<Response>;
+    export function patch  (url: string, options?: got.Options): Promise<Response>;
+    export function head   (url: string, options?: got.Options): Promise<Response>;
+    // export function delete (url: string, options?: got.Options): Promise<Response>;
 
     interface Stream extends node_stream.Duplex {}
 
@@ -43,29 +54,29 @@ declare namespace got {
         hostname:      string;
         method:        string;
         path:          string;
-    };
+    }
     export class ReadError extends Error {
         message:       string;
         host:          string;
         hostname:      string;
         method:        string;
         path:          string;
-    };
+    }
     export class ParseError extends Error {
         statusCode:    Number;
         statusMessage: string;
         message:       string;
-    };
+    }
     export class HTTPError extends Error {
         statusCode:    Number;
         statusMessage: string;
         message:       string;
-    };
+    }
     export class MaxRedirectsError extends Error {
         statusCode:    Number;
         statusMessage: string;
         message:       string;
-    };
+    }
 }
 
 export = got;

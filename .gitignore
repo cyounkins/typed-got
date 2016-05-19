@@ -42,3 +42,6 @@ typings
 
 # output folder
 out
+
+.nyc_output/
+build-source-test/

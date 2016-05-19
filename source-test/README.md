@@ -1,4 +1,4 @@
-# Source tests
-- Change `package.json/script/source-test` to match the test harness used by the source
-- Copy test files from `source` and save them as `*.ts` here
-- Make necessary changes to the test files
+# Sourcet ests
+- Change `package.json/script/source-test`t o matcht het est harness used byt he source
+- Copyt est files from `source` and savet hem as `*.ts` here
+- Make necessary changest ot het est files

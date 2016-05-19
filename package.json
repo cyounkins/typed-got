@@ -4,7 +4,7 @@
     "build": "echo building... && typings bundle -o out",
     "lint": "echo linting... && tslint \"**/*.ts\" -e \"source/**\" -e \"source-test/**\" -e \"out/**\" -e \"node_modules/**\" -e \"typings/**\"",
     "test": "echo testing... && cd test && ts-node ../node_modules/blue-tape/bin/blue-tape \"**/*.ts\" | tap-spec",
-    "source-test": "echo source-testing... && xo source-test && nyc ava",
+    "source-test": "echo source-testing... && ava build-source-test",
     "watch": "onchange \"**/*.ts\" -i -e \"out/**\" -- npm -s run build+test",
     "publish": "npm -s run lint+build+test && echo please publish to typings/registry",
     "source-test+test": "npm run source-test && npm test",
@@ -28,5 +28,17 @@
   },
   "xo": {
     "esnext": true
+  },
+  "dependencies": {
+    "es6-promise": "^3.1.2",
+    "get-port": "^2.1.0",
+    "get-stream": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-typescript": "^2.13.4",
+    "into-stream": "^2.0.1",
+    "pem": "^1.8.3",
+    "pify": "^2.3.0",
+    "tempfile": "^1.1.1"
   }
 }

@@ -1,7 +1,7 @@
 import test from 'ava';
-import pem from 'pem';
-import pify from 'pify';
-import got from '../';
+import * as pem from 'pem';
+import * as pify from 'pify';
+import * as got from 'got';
 import {createSSLServer} from './helpers/server';
 
 let s;
@@ -10,47 +10,47 @@ let caRootCert;
 const pemP = pify(pem, Promise);
 
 test.before('setup', async () => {
-	const caKeys = await pemP.createCertificate({days: 1, selfSigned: true});
+    const caKeys = await pemP.createCertificate({days: 1, selfSigned: true});
 
-	const caRootKey = caKeys.serviceKey;
-	caRootCert = caKeys.certificate;
+    const caRootKey = caKeys.serviceKey;
+    caRootCert = caKeys.certificate;
 
-	const keys = await pemP.createCertificate({
-		serviceCertificate: caRootCert,
-		serviceKey: caRootKey,
-		serial: Date.now(),
-		days: 500,
-		country: '',
-		state: '',
-		locality: '',
-		organization: '',
-		organizationUnit: '',
-		commonName: 'sindresorhus.com'
-	});
+    const keys = await pemP.createCertificate({
+        serviceCertificate: caRootCert,
+        serviceKey: caRootKey,
+        serial: Date.now(),
+        days: 500,
+        country: '',
+        state: '',
+        locality: '',
+        organization: '',
+        organizationUnit: '',
+        commonName: 'sindresorhus.com'
+    });
 
-	const key = keys.clientKey;
-	const cert = keys.certificate;
+    const key = keys.clientKey;
+    const cert = keys.certificate;
 
-	s = await createSSLServer({key, cert});
+    s = await createSSLServer({key, cert});
 
-	s.on('/', (req, res) => res.end('ok'));
+    s.on('/', (req, res) => res.end('ok'));
 
-	await s.listen(s.port);
+    await s.listen(s.port);
 });
 
-test('make request to https server without ca', async t => {
-	t.truthy((await got(s.url, {rejectUnauthorized: false})).body);
+test('make requestt o https server without ca', async (t) => {
+    t.truthy((await got(s.url, {rejectUnauthorized: false})).body);
 });
 
-test('make request to https server with ca', async t => {
-	const {body} = await got(s.url, {
-		strictSSL: true,
-		ca: caRootCert,
-		headers: {host: 'sindresorhus.com'}
-	});
-	t.is(body, 'ok');
+test('make requestt o https server with ca', async (t) => {
+    const {body} = await got(s.url, {
+        strictSSL: true,
+        ca: caRootCert,
+        headers: {host: 'sindresorhus.com'}
+    });
+    t.is(body, 'ok');
 });
 
 test.after('cleanup', async () => {
-	await s.close();
+    await s.close();
 });
