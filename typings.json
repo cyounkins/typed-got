@@ -4,17 +4,13 @@
   "homepage": "https://github.com/sindresorhus/got",
   "version": "6.3.0",
   "devDependencies": {
-    "blue-tape": "registry:npm/blue-tape#0.1.0+20160322235613"
-  },
-  "ambientDevDependencies": {
-    "node": "registry:dt/node#4.0.0+20160319033040"
+    "blue-tape": "registry:npm/blue-tape#0.2.0+20160418015423"
   },
   "dependencies": {
     "es6-promise": "registry:npm/es6-promise#3.0.0+20160211003958",
     "pify": "registry:npm/pify#2.3.0+20160513180901"
   },
   "ambientDependencies": {
-    "node": "registry:env/node#4.0.0+20160507210304",
-    "pify": "registry:dt/pify#0.0.0+20160316155526"
+    "node": "registry:env/node#4.0.0+20160507210304"
   }
 }
