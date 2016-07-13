@@ -18,6 +18,7 @@ declare namespace got {
         followRedirect?: boolean;
 
         // Undocumented
+        headers?: any;
         rejectUnauthorized?: boolean;
         strictSSL?: boolean;
         ca?: any;
